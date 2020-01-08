@@ -102,4 +102,13 @@ ORDER BY total_spent ASC;
 
 
 -- RIGHT JOIN
+-- same as left - just pulls everything from 'right' table and matching data from left
+SELECT * FROM customers
+RIGHT JOIN orders
+	ON customers.id = orders.customer_id
+GROUP BY first_name;
+
+
+-- ON DELETE CASCADE
+-- when we delete a parent - corresponding children will be deleted
 
