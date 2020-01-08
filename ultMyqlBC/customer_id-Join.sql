@@ -44,13 +44,13 @@ SELECT * FROM orders WHERE customer_id=
     );
     */
     
-    -- crossjoin
+    -- CROSSJOIN
     -- conjoins every customer with every order - basically useless but this is how it's done
     -- SELECT * FROM customers, orders;
     
-    -- join 
+     -- IMPLICIT INNER JOIN
     SELECT * FROM customers, orders WHERE customers.id = orders.customer_id;
-    
+       
     SELECT first_name, last_name, order_date, amount
     FROM customers, orders
 		WHERE customers.id = orders.customer_id; -- joined where match
