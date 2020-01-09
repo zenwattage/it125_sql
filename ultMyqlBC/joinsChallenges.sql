@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS joins_challenge;
+CREATE DATABASE joins_challenge;
+USE joins_challenge;
+
 DROP TABLE IF EXISTS students, papers;
 
 CREATE TABLE students (
