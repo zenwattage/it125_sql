@@ -56,7 +56,7 @@ FROM customers, orders
 	WHERE customers.id = orders.customer_id; -- joined where match
         
  -- EXPLICIT INNER JOIN
- SELECT * FROM customers_and_orders
+ SELECT * FROM customers
  JOIN orders
 	ON customers.id = orders.customer_id;
     
