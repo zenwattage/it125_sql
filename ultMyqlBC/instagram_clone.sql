@@ -32,7 +32,7 @@ CREATE TABLE likes (
     photo_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY(user_id) REFERENCES users(id),
-    FOREIGN KEY(photo_id) REFERENCES photo(id),
+    FOREIGN KEY(photo_id) REFERENCES photos(id),
     PRIMARY KEY(user_id, photo_id) -- prevent duplication of likes
 );
 
@@ -60,11 +60,3 @@ CREATE TABLE photo_tags (
     PRIMARY KEY(photo_id, tag_id)
     
 );
-
-INSERT INTO users (username) VALUES
-('ScottyPotty'),
-('CharlieBrown');
-
-SELECT * FROM users;
-
-DESCRIBE likes;
