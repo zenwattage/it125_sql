@@ -97,12 +97,15 @@ LEFT JOIN photos
 WHERE image_url IS NULL;
 
 -- FIND THE SINGLE PHOTO WITH THE MOST LIKES and who posted it
-
--- users, photos, likes
--- join id of the user with the id of the photos.user_id
--- photo_id, user_id of the likes
-
 SELECT
-	COUNT(photo_id) 
-FROM likes;
-
+	username,
+	photos.id,
+    photos.image_url,
+	COUNT(*) AS total
+FROM photos
+INNER JOIN likes
+	ON likes.photo_id = photos.id
+INNER JOIN users
+	ON photos.user_id = users.id
+GROUP BY photos.id
+ORDER BY total DESC;
