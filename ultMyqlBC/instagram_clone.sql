@@ -109,3 +109,33 @@ INNER JOIN users
 	ON photos.user_id = users.id
 GROUP BY photos.id
 ORDER BY total DESC;
+
+-- HOW MANY TIMES DOES THE AVERAGE USER POST(photos)
+-- calculate average number of photos
+-- total photos / total number of users
+
+SELECT
+	(SELECT COUNT(*) FROM photos) / (SELECT COUNT(*) FROM users) AS 'Average post';
+    
+
+-- WHAT ARE THE TOP 5 MOST COMMONLY USED HASHTAGS
+SELECT
+	tag_name,
+	COUNT(*) AS total
+FROM photo_tags
+INNER JOIN tags
+	ON photo_tags.tag_id = tags.id
+GROUP BY tag_name
+ORDER BY total DESC
+LIMIT 5;
+
+-- FIND USERS WHO HAVE LIKED EVERY SINGLE PHOTO
+SELECT
+	username,
+    COUNT(*) AS total_likes
+FROM users
+INNER JOIN likes
+	ON users.id = likes.user_id
+GROUP BY likes.user_id
+HAVING total_likes = (SELECT COUNT(*) FROM photos);
+    
