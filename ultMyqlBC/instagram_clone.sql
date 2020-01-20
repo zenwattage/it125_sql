@@ -46,6 +46,17 @@ CREATE TABLE followers (
     PRIMARY KEY (follower_id, followee_id)
 );
 
+CREATE TABLE unfollows (
+	follower_id INT NOT NULL,
+    followee_id INT NOT NULL,
+    create_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (follower_id) REFERENCES users(id),
+    FOREIGN KEY (followee_id) REFERENCES users(id),
+    PRIMARY KEY (follower_id, followee_id)
+);
+
+
+
 CREATE TABLE tags (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     tag_name VARCHAR(255) UNIQUE,
@@ -139,3 +150,19 @@ INNER JOIN likes
 GROUP BY likes.user_id
 HAVING total_likes = (SELECT COUNT(*) FROM photos);
     
+    
+DELETE FROM 
+	followers
+WHERE follower_id=2 AND followee_id = 1;
+
+SELECT * FROM followers LIMIT 5;
+
+-- DELETE FROM
+-- followers
+-- WHERE follower_id = 3;
+
+SELECT * FROM unfollows;
+
+SHOW TRIGGERS;
+
+-- DROP TRIGGER unfollows_trigger;
