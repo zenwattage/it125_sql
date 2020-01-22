@@ -169,29 +169,6 @@ OR (population < 100000 AND surfacearea < 500);
  Identify primary and foreign keys (if any), e.g., with “PK” or “FK”. Show your results as a multiline (aka “block”) SQL comment.
  */
  
- -- a postal code can have be used in more than 1 city and country
- /*
- ie.
- 
- 98040 = USA, king county, mercer island
- but also
- 
-country: italy,
-region: sicilia,messina
-place: 12 
-    
-country: mexico,
-region: Zacatecas,
-place: 4
-
-so for a unique code:
-country code + city code
- + postal code = unique place
-
-
-CITY CODE IS UNIQUE FOR EACH CITY & DESIGNATES WHICH COUNTRY THAT CITY BELONGS TO
-SO EACH ZIPCODE CAN BE ATTACHED TO A CITY CODE AND BE THE CORRECT VERSION OF 98040
- */
  
 /*
 CREATE TABLE postalcodes (
@@ -201,4 +178,4 @@ CREATE TABLE postalcodes (
     status ENUM('decomissioned','active') DEFAULT 'decomissioned'
     );
     
-    */
+*/
