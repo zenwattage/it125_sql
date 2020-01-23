@@ -171,11 +171,11 @@ OR (population < 100000 AND surfacearea < 500);
  
  
 /*
-CREATE TABLE postalcodes (
-	postal_code VARCHAR(6) UNIQUE PRIMARY KEY,
-    postal_city_id INT(11) FOREIGN KEY NOT NULL,
-    household_count INT(11),
+    cityId INT(11) FOREIGN KEY NOT NULL,
+    CountryCode CHAR(3) FOREIGN KEY NOT NULL,
+    postalCode VARCHAR(6) UNIQUE NOT NULL,
+    householdCount INT(11),
     status ENUM('decomissioned','active') DEFAULT 'decomissioned'
-    );
+   
     
 */

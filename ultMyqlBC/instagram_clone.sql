@@ -121,6 +121,8 @@ INNER JOIN users
 GROUP BY photos.id
 ORDER BY total DESC;
 
+
+
 -- HOW MANY TIMES DOES THE AVERAGE USER POST(photos)
 -- calculate average number of photos
 -- total photos / total number of users
