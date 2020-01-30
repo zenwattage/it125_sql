@@ -181,9 +181,10 @@ WHERE region = 'Caribbean' AND (population < 100000 OR SurfaceArea < 500);
  
  
 /*
+	
+    postalCode VARCHAR(6) PRIMARY KEY NOT NULL,
     cityId INT(11) FOREIGN KEY NOT NULL,
     CountryCode CHAR(3) FOREIGN KEY NOT NULL,
-    postalCode VARCHAR(6) UNIQUE NOT NULL,
     householdCount INT(11),
     status ENUM('decomissioned','active') DEFAULT 'decomissioned'
    

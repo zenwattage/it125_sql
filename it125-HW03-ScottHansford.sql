@@ -74,8 +74,8 @@ SELECT
     Language,
     Population
 FROM city
-JOIN countrylanguage;
--- 4013736 row(s) returned
+NATURAL JOIN countrylanguage;
+-- 30670 row(s) returned
 
 
 /*
