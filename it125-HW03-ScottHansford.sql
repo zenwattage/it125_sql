@@ -88,7 +88,7 @@ SELECT
 	Name AS city,
     Language
 FROM city
-LEFT JOIN countrylanguage
+JOIN countrylanguage
 	USING(CountryCode);
 -- 30670 row(s) returned
 
@@ -98,8 +98,8 @@ LEFT JOIN countrylanguage
  Do not change the order in which tables appear in the FROM clause.
 */
 SELECT
-    Language,
-    Name
+	Name,
+    Language
 FROM city
 RIGHT JOIN countrylanguage
 	USING(CountryCode);
@@ -250,11 +250,11 @@ Come up with design for table(s) necessary to support this change.
 	CountryAlliance
 	- AllianceID INT(11) FK NN
     - CountryCode CHAR(3) FK NN
-    - JoinDate DATE
+    - JoinDate DATETIME NN
     
     AllianceDetails
     - AllianceID INT(11) PK NN
     - AllianceName CHAR(52) NN
-    - AllianceCreationYear	DATE
-	
+    - AllianceCreationYear	DATE NN
+    
 */
