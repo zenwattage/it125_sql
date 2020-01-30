@@ -17,9 +17,9 @@ ORDER BY name;
 -- 2. Show a list of countries (by name), along with their areas and continents. 
 -- The resulting report should name the columns “Country”, “Area”, and “Continent”, respectively.
 SELECT
-	name AS 'Country',
-	surfacearea AS 'Area',
-    continent AS 'Continent'
+	name AS `Country`,
+	surfacearea AS `Area`,
+    continent AS `Continent`
 FROM country
 ORDER BY name;
 -- 239 row(s) returned
@@ -56,7 +56,7 @@ SELECT
 	GNP,
     GNPOld
 FROM country
-WHERE GNP > 200000 AND GNPOld > 200000;
+WHERE GNP > 200000 OR GNPOld > 200000;
 -- 22 row(s) returned
 
 
@@ -148,12 +148,22 @@ ORDER BY Population DESC;
 SELECT
 	name,
     population,
-    surfacearea
+    surfacearea,
+    region
 FROM country
-WHERE (population < 100000 OR SurfaceArea < 500)
-OR (population < 100000 AND surfacearea < 500);
+WHERE population < 100000 OR SurfaceArea < 500
+OR (population < 100000 AND surfacearea < 500) ;
 -- 54 row(s) returned
-
+-- ^ original
+-- V redo
+SELECT
+	name,
+    population,
+    surfacearea,
+    region
+FROM country
+WHERE region = 'Caribbean' AND (population < 100000 OR SurfaceArea < 500);
+-- 13 row(s) returned
 
 
 /*You want to expand the World database to track city postal codes.

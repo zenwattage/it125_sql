@@ -14,12 +14,12 @@ Write SQL to accomplish the following tasks using the World sample database prov
  Use table names only in the FROM clause and then only when you must.
  */
  SELECT
-	Name,
+	Name AS Country,
     Language,
     Percentage
  FROM country
  JOIN countrylanguage
- ON country.code = countrylanguage.CountryCode
+	ON country.code = countrylanguage.CountryCode
  WHERE Percentage > 40.0
  ORDER BY Name;
  -- 190 row(s) returned
@@ -32,8 +32,7 @@ SELECT
     Percentage
 FROM country
 JOIN countrylanguage
-WHERE country.code = countrylanguage.CountryCode
-AND Percentage > 40.0
+WHERE country.code = countrylanguage.CountryCode AND Percentage > 40.0
 ORDER BY Name;
 -- 190 row(s) returned
 
@@ -45,18 +44,16 @@ ORDER BY Name;
  Sort these by Country and, within Country, City.
 */
 SELECT
-	country.Name AS 'Country',
-    city.Name AS 'City',
-    Language
-FROM country
-JOIN countrylanguage
-	ON country.Code = countrylanguage.CountryCode
+	city.Name AS city,
+    country.Name AS country
+FROM countryLanguage
+JOIN country
+	ON countrylanguage.CountryCode = country.Code
 JOIN city
-	USING(CountryCode)
-WHERE Language = 'French'
-ORDER BY Country, City;
+	ON country.Code = city.CountryCode
+WHERE Language = "French"
+ORDER BY country, city;
 -- 467 row(s) returned
-
 
 /*
 4. Get a list of cities, languages spoken in that country in which that city exists, and populations.
@@ -139,20 +136,6 @@ ORDER BY CountryName;
 -- 239 row(s) returned
 
 
-/*
-SELECT
-	Name AS CountryName,
-    CASE
-		WHEN Population < 100000000 THEN 'small'
-		WHEN Population BETWEEN 100000000 AND 300000000 THEN 'medium'
-        WHEN Population >= 3000000000 THEN 'large'
-    END AS size
-FROM country
-ORDER BY CountryName;
-*/
-
-
-
 -- These next questions use the Ex database, focusing on the Employees table:
 
 /*
@@ -171,7 +154,7 @@ FROM Employees Emps
 LEFT JOIN Employees Mgrs
 	ON Emps.manager_id = Mgrs.employee_id
 ORDER BY Emps.last_name, Emps.first_name;
--- 72 row(s) returned
+-- 9 row(s) returned
 
 
 /*
@@ -202,7 +185,7 @@ SELECT
     last_name,  
     city,
     district AS state,
-    postal_code,  
+    postal_code AS zip,  
     country
 FROM customer
 JOIN address
@@ -221,11 +204,35 @@ ORDER BY state;
  The list shouldn’t contain any duplicates 
  (i.e., if more than one Hoffman is in a film, the film should only be listed once).
  */
- 
- 
+SELECT
+	film.title,
+	actor.first_name,
+    actor.last_name,
+    film_id,
+    actor.actor_id
+FROM film
+JOIN film_actor
+	using(film_id)
+JOIN actor
+	using(actor_id)
+WHERE actor.last_name = 'hoffman'
+GROUP BY film_id;
+-- 86 row(s) returned
  
 -- 13. Get a list of the titles of all the English language comedies in the database.
-
+SELECT
+	film.title,
+    language.name AS language,
+    category.name AS genre
+FROM film
+JOIN film_category
+ON film.film_id = film_category.film_id
+JOIN category
+ON film_category.category_id = category.category_id
+JOIN language
+ON film.language_id = language.language_id
+WHERE category.name = 'comedy' AND language.name = 'english';
+-- 58 row(s) returned
 
 /*
 1.2 Design Tables, Fields, Properties (2.2 points)
@@ -238,4 +245,16 @@ Come up with design for table(s) necessary to support this change.
  whether the field must be non-null (marked as “NN”).
  Identify primary and foreign keys (with “PK” or “FK”).
  Show your results as a multiline (aka block) SQL comment.
+*/
+/*
+	CountryAlliance
+	- AllianceID INT(11) FK NN
+    - CountryCode CHAR(3) FK NN
+    - JoinDate DATE
+    
+    AllianceDetails
+    - AllianceID INT(11) PK NN
+    - AllianceName CHAR(52) NN
+    - AllianceCreationYear	DATE
+	
 */
