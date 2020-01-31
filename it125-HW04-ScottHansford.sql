@@ -102,22 +102,27 @@ VIN Number = YEAR(4) (but of course, with a correct answer!). Note: don’t list
 me to choose one to grade; YOU pick the best option and show it. If you want to discuss it, include that in
 a comment as well.
 */
+
 /*
 11. VIN Number: each vehicle has a unique identifier associated with it. This is always 17 in length
 and consists of number and letters.
 */
+-- VIN Number: VARCHAR(17)
 
 
 /*
 12. MSRP: the manufacturer’s suggested price for the vehicle. At Vinnie’s this won’t be higher than
 $99,999. There are no “cents” associated here; dollars only.
 */
+--  MSRP:  INT(5) UNSIGNED
 
 
 /*
 13. Estimated MPG, City: the number of miles per gallon you may get when driving in the city. This is
 a number with no more than two digits, e.g., 34 or 51.
 */
+--
+
 
 
 /*
