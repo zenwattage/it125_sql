@@ -121,7 +121,7 @@ $99,999. There are no “cents” associated here; dollars only.
 13. Estimated MPG, City: the number of miles per gallon you may get when driving in the city. This is
 a number with no more than two digits, e.g., 34 or 51.
 */
---
+-- MPG: INT(3) UNSIGNED
 
 
 
@@ -130,26 +130,34 @@ a number with no more than two digits, e.g., 34 or 51.
 digit after the decimal place, e.g., 3.5 or 4.9. The maximum rating is 5.0, the minimum 0.0.
 */
 
+-- Rating: DECIMAL(1,1) UNSIGNED DEFAULT(0.0)
+
 -- 15. Sold: shows whether this vehicle has been sold.
 
+-- Sold: ENUM('Sold','Owned')
 
 -- 16. Make: the “brand” or car, e.g., Ford or Mitsubishi.
-
+-- Make:  ENUM('Ford', 'Mitsubishi')
 
 /*
 17. Color: without getting specific to the manufacturer’s crazy colors (e.g., “Champagne Pearl”),
 Vinnie’s lists one of these colors for each car: White, Silver, Black, Yellow, Red, Green, or Blue.
 */
+-- Color:  SET('White','Silver','Black','Yellow','Red','Green','Blue')
 
 /*
 18. Options: cars come with one or more of these options: Stereo Upgrade, Roof Rack, Mud Guards,
 Wheel Upgrade, Nav System.
 */
+-- Options: SET('Stereo Upgrade', 'Roof Rack', 'Mud Guards', 'Wheel Upgrade', 'Nav System')
 
 /*
 19. Sales Ratio: gives the percent of sales this model car represents, e.g., 13.1 would indicate that
 this model car represents 13.1% of all of Vinnie’s car sales. Vinnie cares about one digit after the
 decimal place. This number is used for averages and gets recalculated periodically.
 */
+-- Sales Ratio: DECIMAL(2,1) 
+
 
 -- 20. Purchase Date: records the date and time when Vinnie acquired the vehicle.
+-- Purchase Date: DATETIME

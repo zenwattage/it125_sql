@@ -18,8 +18,7 @@ Write SQL to accomplish the following tasks using the World sample database prov
     Language,
     Percentage
  FROM country
- JOIN countrylanguage
-	ON country.code = countrylanguage.CountryCode
+ JOIN countrylanguage ON country.code = countrylanguage.CountryCode
  WHERE Percentage > 40.0
  ORDER BY Name;
  -- 190 row(s) returned
@@ -31,7 +30,7 @@ SELECT
     Language,
     Percentage
 FROM country
-JOIN countrylanguage
+	JOIN countrylanguage
 WHERE country.code = countrylanguage.CountryCode AND Percentage > 40.0
 ORDER BY Name;
 -- 190 row(s) returned
@@ -47,13 +46,11 @@ SELECT
 	city.Name AS city,
     country.Name AS country
 FROM countryLanguage
-JOIN country
-	ON countrylanguage.CountryCode = country.Code
-JOIN city
-	ON country.Code = city.CountryCode
-WHERE Language = "French"
+	JOIN country ON countrylanguage.CountryCode = country.Code
+	JOIN city 	 ON country.Code = city.CountryCode
+WHERE Language = 'French'
 ORDER BY country, city;
--- 467 row(s) returned
+-- 472 row(s) returned
 
 /*
 4. Get a list of cities, languages spoken in that country in which that city exists, and populations.
@@ -64,8 +61,7 @@ SELECT
     Language,
     Population
 FROM city
-JOIN countrylanguage
-USING(CountryCode);
+	JOIN countrylanguage USING(CountryCode);
 -- 30670 row(s) returned
 
 -- 5. Same as previous, but instead of USING do a natural join.
@@ -74,7 +70,7 @@ SELECT
     Language,
     Population
 FROM city
-NATURAL JOIN countrylanguage;
+	NATURAL JOIN countrylanguage;
 -- 30670 row(s) returned
 
 
@@ -88,7 +84,7 @@ SELECT
 	Name AS city,
     Language
 FROM city
-JOIN countrylanguage
+	JOIN countrylanguage
 	USING(CountryCode);
 -- 30670 row(s) returned
 
@@ -101,7 +97,7 @@ SELECT
 	Name,
     Language
 FROM city
-RIGHT JOIN countrylanguage
+	RIGHT JOIN countrylanguage
 	USING(CountryCode);
 -- 30671 row(s) returned
 
@@ -116,22 +112,19 @@ RIGHT JOIN countrylanguage
 */
 
 SELECT
-	Name AS CountryName,
-    Population
+	Name AS CountryName, Population, 'Small' AS Size
 FROM country
-WHERE Population < 1000000000
+WHERE Population < 1000000
 UNION
 SELECT
-	Name AS CountryName,
-    Population
+	Name AS CountryName, Population, 'Medium' AS Size
 FROM country
-WHERE Population BETWEEN 100000000 AND 300000000
+WHERE Population BETWEEN 1000000 AND 3000000
 UNION
 SELECT
-	Name AS CountryName,
-	Population
+	Name AS CountryName, Population, 'Large' AS Size
 FROM country
-WHERE Population >= 300000000
+WHERE Population >= 3000000
 ORDER BY CountryName;
 -- 239 row(s) returned
 
@@ -151,7 +144,7 @@ SELECT
     CONCAT(Mgrs.first_name, ' ', Mgrs.last_name) AS Manager,
     IFNULL(Mgrs.manager_id, 'exec') AS Executive
 FROM Employees Emps
-LEFT JOIN Employees Mgrs
+	LEFT JOIN Employees Mgrs
 	ON Emps.manager_id = Mgrs.employee_id
 ORDER BY Emps.last_name, Emps.first_name;
 -- 9 row(s) returned
@@ -171,10 +164,18 @@ SELECT
 	CONCAT(interviewers.first_name,' ', interviewers.last_name) AS interviewer,
     CONCAT(interviewees.first_name,' ', interviewees.last_name) AS interviewee
 FROM employees interviewers
-JOIN employees interviewees
-ON interviewers.employee_id != interviewees.employee_id
+	JOIN employees interviewees	ON interviewers.employee_id != interviewees.employee_id
 ORDER BY interviewers.last_name, interviewers.first_name;
 -- 72 row(s) returned
+
+-- EXPLICIT CROSS JOIN VERSION
+SELECT
+	CONCAT(interviewers.first_name,' ', interviewers.last_name) AS interviewer,
+    CONCAT(interviewees.first_name,' ', interviewees.last_name) AS interviewee
+FROM employees interviewers
+	CROSS JOIN employees interviewees
+WHERE interviewers.employee_id != interviewees.employee_id;
+
 
 
 -- For these questions use the Sakila database provided as a sample with MySQL:
@@ -212,9 +213,9 @@ SELECT
     actor.actor_id
 FROM film
 JOIN film_actor
-	using(film_id)
+	USING(film_id)
 JOIN actor
-	using(actor_id)
+	USING(actor_id)
 WHERE actor.last_name = 'hoffman'
 GROUP BY film_id;
 -- 86 row(s) returned
@@ -258,3 +259,27 @@ Come up with design for table(s) necessary to support this change.
     - AllianceCreationYear	DATE NN
     
 */
+
+/*
+
+-- PROJECT SCORE: 9.05 out of 10.00, or 90.45% * QUERIES (7.07 OUT OF 7.80):
+ - General, style could use some work on a number of these queries, esp. 
+ when it comes to ONLY major clauses being at left margin, others (and wrapped lines) needing indentation, etc.
+ See our Style Guide, please, and ask if you need clarifications.
+ - #3, no quotation marks in SQL, please; use apostrophes around text literals.
+ - #6, the wording is strongly pointing you toward an OUTER join (note the word "ALL" in caps).
+		Inner join may not capture everything requested, in these cases.
+ - #8, puts 3,000,000 in BOTH Medium and Large categories.
+ - #8, doesn't put the desired Small, Medium, Large text in a column; see the slides for a UNION example that does this.
+ - #9, this is the same code we had in the example; it needed to be extended to the three-table scenario.
+ - #10, I'd rather see an explicit CROSS JOIN here than an implicit one; it makes it super clear what's going on.
+ - #12, didn't need GROUP BY; we haven't even studied that yet. DISTINCT was what we wanted.
+ - #13, nice work on this query. 
+ * DESIGN (1.98 OUT OF 2.20): - Alliance: for year created, YEAR, DATE, TIMESTAMP, DATETIME, etc.,
+ probably won't work well; there are limitations to that data type that might not work for old alliances.
+ No deduction.
+ - Country/Alliance: for year joined, neither DATE, YEAR, TIMESTAMP, nor DATETIME will likely work because of range issues with very old alliances.
+ No deduction. - Country/Alliance: what's the PK for this table? - Otherwise, good.
+ * OVERALL: - Good work on this project.
+ 
+ */
