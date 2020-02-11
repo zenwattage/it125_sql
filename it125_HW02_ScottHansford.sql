@@ -190,3 +190,27 @@ WHERE region = 'Caribbean' AND (population < 100000 OR SurfaceArea < 500);
    
     
 */
+
+/*
+
+
+Didn't need the CREATE TABLE SQL, but it's a good start.  Not CORRECT, in terms of FK, but we'll get there.  : )
+William Barry , Jan 22 at 4:53pm
+PROJECT SCORE: 9.65 out of 10.00, or 96.50%
+
+*  QUERIES (7.40 OUT OF 7.50):  
+    -  #2, backticks (`) are preferred to apostrophes (') here; there are cases where it will make a difference when you use the name later in the query.  No deduction.
+    -  #6, logical operator should be OR, not AND, to meet the problem requirements.
+    -  #14, good work.
+    -  #15, missing the Caribbean part of the question; that also kept you from learning the logic lesson I was hoping you'd learn.  
+    -  #15, the second compound condition doesn't add value; OR already covers the case where both are true.
+    -  Otherwise, good.
+
+*  DESIGN (2.25 OUT OF 2.50):  
+    -  PK - per the problem, PostalCode isn't unique around the world, so this isn't a good PK.  Needs to either be a composite including the City ID, or have an ID of its own for this table.
+    -  FK - doesn't need a link to the Country table; that's not in the requirements.  Plus, City is ALREADY linked to Country, so the relationship is there, just one table removed.
+    -  Active - good choice.
+
+*  OVERALL:  
+    -  Great work on this project. */
+    
