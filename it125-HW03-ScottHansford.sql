@@ -149,6 +149,12 @@ FROM Employees Emps
 ORDER BY Emps.last_name, Emps.first_name;
 -- 9 row(s) returned
 
+SELECT *
+FROM departments
+JOIN employees
+ON departments.department_number = employees.department_number ;
+select * from departments;
+select * from employees;
 
 /*
 10. You’re running a new, small company. During the upcoming month, each employee
@@ -164,7 +170,8 @@ SELECT
 	CONCAT(interviewers.first_name,' ', interviewers.last_name) AS interviewer,
     CONCAT(interviewees.first_name,' ', interviewees.last_name) AS interviewee
 FROM employees interviewers
-	JOIN employees interviewees	ON interviewers.employee_id != interviewees.employee_id
+	CROSS JOIN employees interviewees
+	WHERE interviewers.employee_id != interviewees.employee_id
 ORDER BY interviewers.last_name, interviewers.first_name;
 -- 72 row(s) returned
 
@@ -283,3 +290,19 @@ Come up with design for table(s) necessary to support this change.
  * OVERALL: - Good work on this project.
  
  */
+ 
+ 
+ -- testing for midterm
+ 
+ desc employees;
+ SELECT * FROM employees;
+ 
+ INSERT INTO employees
+ VALUES(10, 'Shitty', 'Mike', 3, 2);
+ 
+ UPDATE employees
+	SET employee_id = 11
+WHERE employee_id = 10;
+
+DELETE FROM employees
+WHERE employee_id = 11;
