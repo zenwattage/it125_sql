@@ -1,0 +1,55 @@
+DML
+- Database manipulation language - a syntax for accessing and manipulationg databases
+
+DDL 
+- Database Definition language 
+- A syntax for creating the structure and usagae of a database
+
+Compund (complex) condition
+- a statement comprised of multiple selection definition parameters
+
+Parameter 
+- an argument required by a function operation
+
+fixed-length string
+- space allowance for a character that does not change size regardless of actual usage
+
+variable-length string
+- a space allowance that allows for data which can change size from one row to the next
+
+MySQL safe update mode
+- a security protocol for preventing potentially catastrophic alterations of a database
+
+Explicit conversion
+- Using CAST or CONVERT operations to change a data type from one to another
+
+Implicit conversion
+- Automatic changing of data types which is done by MySQL for the user such as returning 2 if the user enters "1" + 1.
+
+Composite key
+- a unique identifier comprised of two or more columns in a table
+
+Foreign key
+- A primary key from a seperate table
+
+Many-to-many relationship
+- When a table has multiple rows that match multiple rows in a another table
+
+One-to-many relationship
+- When a table has one row that matches with many other rows in another table
+
+Referential integrity 
+- A system of ensuring connected parent/child relationships remain intact and no orphaned data exists in a database
+
+Join
+- combines columns from one table with one or more columns from another table
+
+comparison operator
+- a method for evaluating two expressions against eachother
+
+expression
+- combination of column names and operators that evaluate to a single value
+
+outer join
+- brings together data when any of the records in the field match
+
