@@ -17,6 +17,9 @@ CREATE TABLE Customer (
     CustPhone CHAR(10)
 );
 
+CREATE INDEX CUSTPHONE
+ON Customer (CustPhone);
+
 CREATE TABLE Aquarium (
 	AquariumId INT PRIMARY KEY AUTO_INCREMENT,
     AquariumGallons SMALLINT(3) NOT NULL,
