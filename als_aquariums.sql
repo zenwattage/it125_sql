@@ -141,7 +141,7 @@ WHERE OrderFish.FishId = Fish.fishId
 GROUP BY FishName
 ORDER BY totalPurchased DESC;
 
--- get most popular aquarium type
+-- get most sold aquarium type
 SELECT
 	distinct
     aquariumGallons,
