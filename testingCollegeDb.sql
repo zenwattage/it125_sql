@@ -15,6 +15,8 @@ CREATE TABLE section (
 	sectionId INT PRIMARY KEY AUTO_INCREMENT,
     name	ENUM('Day','Night', 'Online')    
 );
+INSERT INTO section
+VALUES (DEFAULT, 'Night');
 
 -- designation should be our primary key?
 CREATE TABLE course (
@@ -25,12 +27,6 @@ CREATE TABLE course (
 );
 INSERT INTO course
 VALUES (DEFAULT, 'MATH101', 'GEOMETRY', 5);
-
-
-
-
-INSERT INTO section
-(
 
 SELECT * FROM course;
 SELECT * FROM section;

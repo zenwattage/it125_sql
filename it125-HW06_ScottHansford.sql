@@ -147,7 +147,7 @@ SELECT
     aquariumGallons,
     aquariumFinish,
     orders.aquariumId,
-    COUNT(orders.AquariumId) as totalSales
+    COUNT(*) as totalSales
 FROM Orders
 INNER JOIN Aquarium
 	WHERE orders.AquariumId = Aquarium.AquariumId
