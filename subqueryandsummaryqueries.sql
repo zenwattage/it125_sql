@@ -84,9 +84,24 @@ FROM product);
 
 
 
-SELECT * 
-FROM ingredient
-WHERE ingredientName = 'Cinnamon';
 
-SELECT * 
-FROM productOrder;
+
+SELECT DISTINCT 
+	CustomerLastName,
+    CustomerFirstName,
+    CustomerEmail
+FROM Customer 
+JOIN CakeOrder
+    USING (CustomerId)
+JOIN ProductOrder
+	USING (CakeOrderId)
+WHERE ProductId IN 
+(    SELECT
+	ProductId 
+    FROM Ingredient 
+    JOIN ProductIngredient 
+    USING (IngredientId)
+    JOIN Product       
+    USING (ProductId) 
+    WHERE IngredientName = 'Cinnamon' )
+ORDER BY CustomerLastName, CustomerFirstName;
