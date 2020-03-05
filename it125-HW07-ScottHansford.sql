@@ -184,7 +184,9 @@ JOIN film_category
 	USING(film_id);
 
 SELECT
+	title,
 	category.name AS Category,
+    category_id,
     COUNT(*) AS Count
 FROM film
 JOIN film_category
@@ -192,7 +194,7 @@ JOIN film_category
 JOIN category
 	USING(category_id)
 GROUP BY category_id
-HAVING Count > 70
+HAVING Count > 60
 ORDER BY Count DESC ;
  
  
