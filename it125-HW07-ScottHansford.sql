@@ -175,26 +175,34 @@ WHERE film_id IN (
   Use that result to get a list of the actors who are in over twenty-five of the movies in those categories.
   In the result, show the actor’s last name, first name, and the count of films they are in.
   */
-
-SELECT 
-	film_id,
-    category_id
-FROM film
-JOIN film_category
-	USING(film_id);
+  
+SELECT
+	first_name,
+    last_name,
+    COUNT(*) as aCount
+FROM film_actor
+JOIN actor
+	USING(actor_id)
+GROUP BY actor_id
+HAVING aCount > 25;
 
 SELECT
-	title,
-	category.name AS Category,
-    category_id,
+	first_name,
+    last_name,
+    COUNT(*) as aCount
+FROM film_actor
+JOIN actor
+	USING(actor_id)
+WHERE actor_id IN (
+	SELECT
+    -- category_id,
     COUNT(*) AS Count
-FROM film
-JOIN film_category
-	USING(film_id)
-JOIN category
-	USING(category_id)
-GROUP BY category_id
-HAVING Count > 60
-ORDER BY Count DESC ;
- 
- 
+	FROM film
+	JOIN film_category
+		USING(film_id)
+	GROUP BY category_id
+	HAVING Count > 60
+)
+GROUP BY actor_id
+HAVING aCount > 25;
+-- 6 row(s) returned
