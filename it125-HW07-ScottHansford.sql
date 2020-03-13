@@ -21,14 +21,15 @@ GROUP BY rental_id;
 */
 SELECT	DISTINCT
 	CONCAT(first_name, ' ',last_name) AS Name,
-	COUNT(rental_id) as Count,
+	COUNT(*) as Count,
     MONTH(rental_date) AS Month,
     YEAR(rental_date)    
 FROM rental
 JOIN staff
 	USING(staff_id)
-GROUP by rental_date, Month
-ORDER BY  Count DESC;
+GROUP by staff_id, Month
+ORDER BY  Count DESC ;
+
 -- 16 row(s) returned
 
 
@@ -45,6 +46,7 @@ ORDER BY  Count DESC;
  FROM payment
  GROUP BY Month
  ORDER BY Month ASC;
+ -- 5 row(s) returned
  
 /*
 4. Using data from Payment and the customer data tables (Customer, Address),
@@ -84,6 +86,7 @@ JOIN category
 GROUP BY category_id
 HAVING Count > 70
 ORDER BY Count DESC ;
+
 -- 2 row(s) returned 
  
  /*
@@ -92,22 +95,22 @@ ORDER BY Count DESC ;
  Then, in the City table, locate and list cities (by name, not number) in those countries,
  but only the ones with the word “south” anywhere in the city’s name.  Sort the results by the city’s name. 
  */
-SELECT 
-	country_id,
-    country,
-    city
-FROM country C
-INNER JOIN
+ SELECT
+	city,
+    country_id
+FROM city
+JOIN country
+	USING(country_id)
+WHERE country_id IN 
 	(
-		SELECT
-		city
-		FROM city 
-		WHERE city LIKE '%south%'
-	) D
-	ON C.country LIKE '%united%'
-    ORDER BY D.city;
-
-
+     SELECT 
+		country_id
+	FROM country
+	WHERE country LIKE '%united%'
+    )
+HAVING city LIKE '%south%'
+ORDER BY city;
+-- 3 row(s) returned
  
  /*
 7. Use the Payment and Customer tables to get a list of customers (show the customer ID, first and last names, and email address)
@@ -122,6 +125,7 @@ INNER JOIN
  JOIN customer
 	USING(customer_id)
 HAVING amount >= 10.00;
+-- 114 row(s) returned
  
  
  
@@ -130,18 +134,38 @@ HAVING amount >= 10.00;
   Then use that to help find a list of category names (from the Category table) that have associated films of that length.
   Don’t show repeated category names. 
   */
-  
-  SELECT distinct
-    film_id,
-    name,
-    length
+SELECT 
+	name,
+    film_id
+FROM category
+JOIN film_category
+	USING(category_id)
+JOIN film
+	USING(film_id)
+WHERE film_id IN 
+	(
+	SELECT
+		film_id
 	FROM film
-    JOIN film_category
-		USING(film_id)
-	JOIN category
-		USING(category_id)
 	WHERE length > 180
-    GROUP BY name;
+    )
+GROUP BY name;
+-- #1
+SELECT film_id
+FROM film
+WHERE length >180;
+#2
+SELECT 'name'
+FROM category JOIN film_category USING (category_id)
+WHERE film_id IN (24,50,128,142);
+
+SELECT DISTINCT 'name'
+FROM category JOIN film_category USING (category_id)
+where film_id in
+(SELECT film_id
+FROM film
+WHERE length > 180);
+
 -- 15 row(s) returned
 
 /*
@@ -161,12 +185,13 @@ LEFT JOIN city
 	USING(city_id)
 LEFT JOIN film
 	USING(film_id)
-WHERE film_id IN (
+WHERE film_id IN 
+	(
 	SELECT
 	film_id
 	FROM film
 	WHERE film_id = 7
-);
+	);
 -- 2 row(s) returned
 
 
@@ -175,16 +200,6 @@ WHERE film_id IN (
   Use that result to get a list of the actors who are in over twenty-five of the movies in those categories.
   In the result, show the actor’s last name, first name, and the count of films they are in.
   */
-  
-SELECT
-	first_name,
-    last_name,
-    COUNT(*) as aCount
-FROM film_actor
-JOIN actor
-	USING(actor_id)
-GROUP BY actor_id
-HAVING aCount > 25;
 
 SELECT
 	first_name,
@@ -193,16 +208,16 @@ SELECT
 FROM film_actor
 JOIN actor
 	USING(actor_id)
-WHERE actor_id IN (
+WHERE actor_id IN
+	(
 	SELECT
-    -- category_id,
     COUNT(*) AS Count
 	FROM film
 	JOIN film_category
 		USING(film_id)
 	GROUP BY category_id
 	HAVING Count > 60
-)
+	)
 GROUP BY actor_id
 HAVING aCount > 25;
 -- 6 row(s) returned
