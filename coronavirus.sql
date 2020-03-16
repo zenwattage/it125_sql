@@ -134,13 +134,13 @@ CONSTRAINT Quar_StateId_FK
 
 INSERT INTO Quarantine
 VALUES
-	(1, 2, 'Kirkland', 'Leisure Care'),
+	(1, 1, 'Kirkland', 'Leisure Care'),
     (2, 15, 'New Rochelle', 'CDC'),
     (3, 4, 'Milan', 'Ministry of Health'),
-    (4, 2, 'Seattle', 'CDC'),
+    (4, 1, 'Seattle', 'CDC'),
     (5, 15, 'New York', 'CDC'),
     (6, 13, 'Los Angeles', 'CDC'),
-    (7, 1, 'Wuhan', 'Xi Jinping'),
+    (7, 2, 'Wuhan', 'Xi Jinping'),
     (8, 6, 'Ontario', 'Public Health Authority'),
     (9, 7, 'Haut-Rhin', 'Ministry of Social Affairs and Health'),
     (10, 8, 'Sydney', 'Department of Health')
@@ -170,36 +170,42 @@ CONSTRAINT QuarPat_PatientId_FK
 
 INSERT INTO QuarantinedPatients
 VALUES
-	(1, 2),
-    (3,5),
-    (2,3),
-    (1,1),
-    (3,4),
-    (4,6),
-    (4,7),
-    (8,9),
-    (1,8),
-    (4,10),
-    (6,11),
-    (9,12),
-    (9,13),
-    (1,14),
-    (2,15),
-    (3,16),
-    (5,17),
-    (6,18),
-    (7,19),
-    (5,20),
-    (10,21),
-    (7,22),
-    (5,23),
-    (1,24),
-    (2,25),
-    (3,26),
-    (10,27),
-    (7,28),
-    (8,29),
-    (9,30)
+	(1, 2),(3,5),(2,3),(1,1),(3,4),(4,6),(4,7),(8,9),(1,8),(4,10),(6,11),
+    (9,12),(9,13),(1,14),(2,15),(3,16),(5,17),(6,18),(7,19),(5,20),
+    (10,21),(7,22),(5,23),(1,24),(2,25),(3,26),(10,27),(7,28),(8,29),(9,30)
     ;
 
 SELECT * FROM QuarantinedPatients;
+
+-- count of patients in each quarantine
+CREATE OR REPLACE VIEW patientsInEachQuarantine AS
+	SELECT 
+		QuarantineId,
+		CountryName,
+		QuarantineName,
+	COUNT(*)
+	FROM country
+	JOIN state
+		USING(CountryId)
+	JOIN quarantine
+		USING(StateId)
+	JOIN quarantinedpatients
+		USING(QuarantineId)
+	GROUP BY QuarantineName;
+    
+-- get country with most patients
+CREATE OR REPLACE VIEW countryWithMostPatients AS
+	SELECT
+		CountryName,
+		count(*) as Count
+	FROM country
+	JOIN state
+		USING(CountryId)
+	JOIN quarantine
+		USING(StateId)
+	JOIN quarantinedpatients
+		USING(QuarantineId)
+	GROUP BY CountryName
+	ORDER BY Count DESC;
+
+
